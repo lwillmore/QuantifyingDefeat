@@ -1,9 +1,10 @@
 # QuantifyingDefeat
 ## contact: willmore@princeton.edu, iwtten@princeton.edu, afalkner@princeton.edu
-This repo will contain
+This repo contains
 - supervised classification of defeat behavior
 - t-SNE decomposition of behavior space
 - real-time behavior tracking and classification
+And this repo will contain
 - figure generation for accompanying publication
 
 
