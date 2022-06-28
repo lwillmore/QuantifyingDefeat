@@ -11,5 +11,8 @@ Behavioral and dopaminergic signatures of resilience
 Lindsay Willmore, Courtney Cameron, John Yang, Ilana Witten, Annegret Falkner
 bioRxiv 2022.03.18.484885; doi: https://doi.org/10.1101/2022.03.18.484885
 
-Data can be downloaded from
+For each main figure panel, accompanying data will be available for direct download.
+
+
+More comprehesive data sets can be downloaded from
 https://figshare.com/projects/Behavioral_and_dopaminergic_signatures_of_resilience/141938
