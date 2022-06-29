@@ -24,6 +24,11 @@ def make_behavior_plots(dat,height=1,aspect=3,offset=0.2,titles='{row_name}',yla
        (ggp[2][0],ggp[2][1],ggp[2][2])],
                        order=None,norm=1,err_style='band',single_test=False,sharey=False):
 
+    # Center variables 
+    dat['d_centered'] = dat['d']-dat['d'].unique().mean()
+    dat['si_centered'] = dat['si']-dat['si'].unique().mean()
+    
+    
     if order==None:
         order=np.unique(dat.c)
     
@@ -59,20 +64,18 @@ def make_behavior_plots(dat,height=1,aspect=3,offset=0.2,titles='{row_name}',yla
 
             print(b,d,t,p)
             ps.append(p)
-#             if p<0.05:
-#                 ymin,ymax=a.get_ylim()
-#                 yspan=ymax-ymin
-#                 a.text(d,ymax-0.04*yspan,'*')
         
         stars,ps2,_,_ = multipletests(ps,alpha=0.05,method='fdr_bh')
         print (b,stars)
         
-        md = smf.gee("t ~ rb*d", data=dat.query('c=="%s"'%b), groups=dat.query('c=="%s"'%b)["m"])
+        md = smf.gee("t ~ rb*d_centered", data=dat.query('c=="%s"'%b), groups=dat.query('c=="%s"'%b)["m"])
         mdf = md.fit()
         print(mdf.summary())
-        md = smf.gee("t ~ si*d", data=dat.query('c=="%s"'%b), groups=dat.query('c=="%s"'%b)["m"])
+        print(mdf.pvalues)
+        md = smf.gee("t ~ si_centered*d_centered", data=dat.query('c=="%s"'%b), groups=dat.query('c=="%s"'%b)["m"])
         mdf = md.fit()
         print(mdf.summary())
+        print(mdf.pvalues)
         
     g.fig.text(0.0, 0.5, ylabel, 
            va='center', 
@@ -170,6 +173,8 @@ def make_behavior_plots(dat,height=1,aspect=3,offset=0.2,titles='{row_name}',yla
                         groups=test_df['m'])
             res = md.fit()
             print(res.summary())
+            print(res.pvalues)
+            
             pval=res.pvalues[1]
             abline(res.params[1],res.params[0],a)
             y_vals = np.array(a.get_ylim())
